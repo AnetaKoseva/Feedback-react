@@ -1,11 +1,39 @@
-function App() {
-    return ( 
-        <div>
-            <h1> My App </h1> 
-            <p> Hello </p>
-         </div> 
-         
-    )
-};
 
-export default App;
+import {BrowserRouter as Router, Route,Routes} from 'react-router-dom'
+import Header from './components/Header'
+import FeedbackList from './components/FeedbackList'
+import FeedbackStats from './components/FeedbackStats'
+import FeedbackForm from './components/FeedbackForm'
+import AboutIconLink from './components/AboutIconLink'
+import AboutPage from './pages/AboutPage'
+import { FeedbackProvider } from './context/FeedbackContext'
+import Post from './pages/Post'
+
+function App() {
+    
+    return (
+      <FeedbackProvider>
+      <Router>
+        <Header />
+        <div className='container'>
+          <Routes>
+            <Route exact path='/' element={
+            <>
+              <FeedbackForm/>
+              <FeedbackStats/>
+              <FeedbackList/>
+              </>}>
+              
+            </Route>
+          <Route path='/about' element={<AboutPage/>}></Route>
+          {/* <Route path='/post/:id' element={<Post/>}></Route> */}
+          <Route path='/post/*' element={<Post/>}></Route>
+          </Routes>
+          <AboutIconLink/>
+        </div>
+      </Router>
+      </FeedbackProvider>
+    )
+  }
+  
+  export default App
