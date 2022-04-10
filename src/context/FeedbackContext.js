@@ -4,6 +4,7 @@ import {createContext,useState, useEffect} from 'react'
 const FeedbackContext=createContext();
 
 export const FeedbackProvider=({children})=>{
+    const [isLoading,setIsLoading]=useState(true)
     const [feedback,setFeedback]=useState([]);
 
     const [feedbackEdit,setFeedbackEdit]=useState({
@@ -21,6 +22,7 @@ const fetchFeedback=async()=>{
     const data=await response.json()
 
     setFeedback(data)
+    setIsLoading(false)
 }
 
 //Add feedback
@@ -52,10 +54,11 @@ const updateFeedback=(id,upItem)=>{
     
 return <FeedbackContext.Provider value={{
     feedback,
+    feedbackEdit,
+    isLoading,
     deleteFeedback,
     addFeedback,
     editFeedback,
-    feedbackEdit,
     updateFeedback
 }}>
     {children}
